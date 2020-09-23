@@ -5,12 +5,12 @@ from . import views, schema
 
 
 urlpatterns = [
-    path('graphql/sdl', sdl),
-    path('graphql/', GraphQLView.as_view(graphiql=True)),
-    path('', views.index),
+    path("graphql/sdl", sdl),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
+    path("", views.index),
 ]
 
 
 websocket_urlpatterns = [
-    path('ws/graphql/', schema.SchemaWsConsumer),
+    path("ws/graphql/", schema.consumer),
 ]
