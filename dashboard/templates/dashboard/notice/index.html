@@ -1,0 +1,48 @@
+<!-- chat/templates/chat/room.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Notice</title>
+</head>
+
+<body>
+    <textarea id="notice-log" cols="100" rows="20"></textarea><br />
+    <input id="notice-message-input" type="text" size="100" /><br />
+    <input id="notice-message-submit" type="button" value="Send" />
+</body>
+
+<script>
+    const url = `wss://${window.location.host}/dashboard/ws/notice/`;
+    const chatSocket = new WebSocket(url);
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const message = data['message'];
+        document.querySelector('#notice-log').value += (message + '\n');
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#notice-message-input').focus();
+    document.querySelector('#notice-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) { // enter, return
+            document.querySelector('#notice-message-submit').click();
+        }
+    };
+
+    document.querySelector('#notice-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#notice-message-input');
+        const message = messageInputDom.value;
+        noticeSocket.send(JSON.stringify({
+            'message': message
+        }));
+
+        messageInputDom.value = '';
+    };
+</script>
+
+</html>

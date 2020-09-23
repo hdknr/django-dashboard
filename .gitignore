@@ -1,0 +1,77 @@
+*.log
+*.pyc
+*.retry
+.svn
+*.sqlite3
+
+# editors
+.ropeproject
+*~
+.*~
+*.swp
+.vscode
+
+# python
+*.egg-info
+build
+dist
+
+# django projects
+media
+docs/build
+logs
+mails
+node_modules
+samples/web/app/local_settings.py
+samples/web/static
+.coverage
+
+# mac
+.DS_Store
+
+# Ansible
+ansible/hosts.conf
+ansible/ssh.conf
+ansible/data
+
+# jupyter
+
+.ipynb_checkpoints
+
+# wordpress
+bin/wp-cli.phar
+.php-version
+wordpress
+
+# docs
+~*.xlsx
+
+# schemaspy
+bin/*.jar
+bin/schemaspy
+
+
+#
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

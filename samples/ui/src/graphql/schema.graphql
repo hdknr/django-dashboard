@@ -1,0 +1,140 @@
+schema {
+  query: Query
+  subscription: Subscription
+}
+
+scalar DateTime
+
+type LatestNotice {
+  title: String
+  notices: [Notice]
+}
+
+type Message implements Node {
+  created_at: DateTime!
+  updated_at: DateTime!
+  id: ID!
+  subject: String!
+  message: String
+  url: String
+  topic: Topic
+  notice_set(before: String, after: String, first: Int, last: Int, created_at: DateTime, updated_at: DateTime, read: Boolean, message: ID, user: ID, pk: Float): NoticeConnection!
+  pk: Int
+  endpoint: String
+}
+
+type MessageConnection {
+  pageInfo: PageInfo!
+  edges: [MessageEdge]!
+}
+
+type MessageEdge {
+  node: Message
+  cursor: String!
+}
+
+type MessageNodeSetConnection {
+  pageInfo: PageInfo!
+  edges: [MessageNodeSetEdge]!
+  total_count: Int
+  records: Int
+}
+
+type MessageNodeSetEdge {
+  node: Message
+  cursor: String!
+}
+
+interface Node {
+  id: ID!
+}
+
+type Notice implements Node {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  read: Boolean!
+  message: Message
+  pk: Int
+  endpoint: String
+}
+
+type NoticeConnection {
+  pageInfo: PageInfo!
+  edges: [NoticeEdge]!
+}
+
+type NoticeEdge {
+  node: Notice
+  cursor: String!
+}
+
+type NoticeNodeSetConnection {
+  pageInfo: PageInfo!
+  edges: [NoticeNodeSetEdge]!
+  total_count: Int
+  records: Int
+}
+
+type NoticeNodeSetEdge {
+  node: Notice
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  topic(id: ID!): Topic
+  topic_set(before: String, after: String, first: Int, last: Int, parent: ID, code: String, title: String, lft: Int, rght: Int, tree_id: Int, level: Int, pk: Float): TopicNodeSetConnection
+  message(id: ID!): Message
+  message_set(before: String, after: String, first: Int, last: Int, created_at: DateTime, updated_at: DateTime, subject: String, message: String, url: String, topic: ID, pk: Float): MessageNodeSetConnection
+  notice(id: ID!): Notice
+  notice_set(before: String, after: String, first: Int, last: Int, created_at: DateTime, updated_at: DateTime, read: Boolean, message: ID, user: ID, pk: Float): NoticeNodeSetConnection
+}
+
+type Subscription {
+  latestnotice(arg1: String, arg2: String): LatestNotice
+}
+
+type Topic implements Node {
+  id: ID!
+  parent: Topic
+  code: String!
+  title: String
+  lft: Int!
+  rght: Int!
+  tree_id: Int!
+  level: Int!
+  children(before: String, after: String, first: Int, last: Int, parent: ID, code: String, title: String, lft: Int, rght: Int, tree_id: Int, level: Int, pk: Float): TopicConnection!
+  message_set(before: String, after: String, first: Int, last: Int, created_at: DateTime, updated_at: DateTime, subject: String, message: String, url: String, topic: ID, pk: Float): MessageConnection!
+  pk: Int
+  endpoint: String
+  full_code_path: String
+}
+
+type TopicConnection {
+  pageInfo: PageInfo!
+  edges: [TopicEdge]!
+}
+
+type TopicEdge {
+  node: Topic
+  cursor: String!
+}
+
+type TopicNodeSetConnection {
+  pageInfo: PageInfo!
+  edges: [TopicNodeSetEdge]!
+  total_count: Int
+  records: Int
+}
+
+type TopicNodeSetEdge {
+  node: Topic
+  cursor: String!
+}

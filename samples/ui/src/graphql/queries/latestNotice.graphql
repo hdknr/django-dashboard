@@ -1,0 +1,11 @@
+subscription latestNotice($arg1: String, $arg2: String) {
+  latestnotice(arg1: $arg1, arg2: $arg2) {
+      title
+      notices {
+        message {
+          subject
+          message
+        }
+      }
+  }
+}
